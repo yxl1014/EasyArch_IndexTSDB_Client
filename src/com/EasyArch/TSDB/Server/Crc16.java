@@ -3,22 +3,21 @@ package com.EasyArch.TSDB.Server;
 public class Crc16 {
 
     public static byte[] getCRC(byte[] bytes) {
-        short CRC = 255;
-        short POLYNOMIAL = 161;
+        short CRC = 0x00ff;
+        short POLYNOMIAL = 0x00a1;
 
-        for(int i = 0; i < bytes.length; ++i) {
-            CRC = (short)(CRC ^ bytes[i] & 255);
-
-            for(int j = 0; j < 8; ++j) {
-                if ((CRC & 1) != 0) {
-                    CRC = (short)(CRC >> 1);
+        int i, j;
+        for (i = 0; i < bytes.length; i++) {
+            CRC ^= ((int) bytes[i] & 0x00ff);
+            for (j = 0; j < 8; j++) {
+                if ((CRC & 0x0001) != 0) {
+                    CRC >>= 1;
                     CRC ^= POLYNOMIAL;
                 } else {
-                    CRC = (short)(CRC >> 1);
+                    CRC >>= 1;
                 }
             }
         }
-
         return shortToByte(CRC);
     }
 
