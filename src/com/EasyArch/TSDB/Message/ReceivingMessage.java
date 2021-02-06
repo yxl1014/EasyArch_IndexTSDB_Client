@@ -1,8 +1,8 @@
-package com.EasyArch.TSDB.Server;
+package com.EasyArch.TSDB.Message;
 
 public class ReceivingMessage {
 
-    public byte[] DDLMessage(byte agreement, byte edition, byte[] name) {//一报文类型，二版本号，三新建数据名
+    public static byte[] DDLMessage(byte agreement, byte edition, byte[] name) {//一报文类型，二版本号，三新建数据名
 
         int nofixedsize = name.length + 1;//计算不定长报文段的长度
         byte[] nofixed = new byte[nofixedsize];//新建不定长报文段
@@ -12,9 +12,9 @@ public class ReceivingMessage {
         System.arraycopy(name, 0, nofixed, 1, name.length);//将创建的用户名或者表名库名赋值给后几位
 
         String Messagelen = Integer.toBinaryString(nofixed.length + 3);//将长数据长度转换为二进制字符串
-        int l = this.toLen(Messagelen);//计算没有算长度为的总长度
+        int l = toLen(Messagelen);//计算没有算长度为的总长度
         String M = Integer.toBinaryString(nofixed.length + 3 + l);//将长数据长度转换为二进制字符串
-        int size = this.toLen(M);//计算 算长度为的总长度
+        int size = toLen(M);//计算 算长度为的总长度
 
 
         byte[] fixed = new byte[3 + size];//定义定长报文头
@@ -34,7 +34,7 @@ public class ReceivingMessage {
         return b;
     }
 
-    public byte[] DMLMessage(byte agreement, String data, byte edition, byte[] tablename) {//一报文类型，二数据，三版本号，四操作表名
+    public static byte[] DMLMessage(byte agreement, String data, byte edition, byte[] tablename) {//一报文类型，二数据，三版本号，四操作表名
 
         byte[] payload = data.getBytes();//将数据转成byte数组
         int nofixedsize = payload.length + tablename.length + 1;//计算不定长报文段的长度
@@ -47,9 +47,9 @@ public class ReceivingMessage {
 
 
         String Messagelen = Integer.toBinaryString(nofixed.length + 3);//将长数据长度转换为二进制字符串
-        int l = this.toLen(Messagelen);//计算没有算长度为的总长度
+        int l = toLen(Messagelen);//计算没有算长度为的总长度
         String M = Integer.toBinaryString(nofixed.length + 3 + l);//将长数据长度转换为二进制字符串
-        int size = this.toLen(M);//计算 算长度为的总长度
+        int size = toLen(M);//计算 算长度为的总长度
 
 
         byte[] fixed = new byte[3 + size];//定义定长报文头
@@ -69,14 +69,14 @@ public class ReceivingMessage {
         return b;
     }
 
-    public byte[] PingMessage(byte agreement, byte edition, byte result) {//一报文类型，二版本号，三响应结果
+    public static byte[] PingMessage(byte agreement, byte edition, byte result) {//一报文类型，二版本号，三响应结果
         byte[] nofixed = new byte[]{edition, result};//将版本号赋值给0位，将返回结果赋值给1位
 
 
         String Messagelen = Integer.toBinaryString(nofixed.length + 3);//将长数据长度转换为二进制字符串
-        int l = this.toLen(Messagelen);//计算没有算长度为的总长度
+        int l = toLen(Messagelen);//计算没有算长度为的总长度
         String M = Integer.toBinaryString(nofixed.length + 3 + l);//将长数据长度转换为二进制字符串
-        int size = this.toLen(M);//计算 算长度为的总长度
+        int size = toLen(M);//计算 算长度为的总长度
 
 
         byte[] fixed = new byte[3 + size];//定义定长报文头
@@ -96,7 +96,7 @@ public class ReceivingMessage {
         return b;
     }
 
-    public byte[] ClientMessage(byte agreement, byte edition, byte[] usernamepassword, byte code) {//一报文类型，二版本号，三用户名密码，四编码格式
+    public static byte[] ClientMessage(byte agreement, byte edition, byte[] usernamepassword, byte code) {//一报文类型，二版本号，三用户名密码，四编码格式
 
         byte[] nofixed = new byte[usernamepassword.length + 2];//定义不定长报文段
         nofixed[0] = edition;//将版本号赋值给第0位
@@ -106,9 +106,9 @@ public class ReceivingMessage {
 
 
         String Messagelen = Integer.toBinaryString(nofixed.length + 3);//将长数据长度转换为二进制字符串
-        int l = this.toLen(Messagelen);//计算没有算长度为的总长度
+        int l = toLen(Messagelen);//计算没有算长度为的总长度
         String M = Integer.toBinaryString(nofixed.length + 3 + l);//将长数据长度转换为二进制字符串
-        int size = this.toLen(M);//计算 算长度为的总长度
+        int size = toLen(M);//计算 算长度为的总长度
 
 
         byte[] fixed = new byte[3 + size];//定义定长报文头
@@ -128,7 +128,7 @@ public class ReceivingMessage {
         return b;
     }
 
-    private int toLen(String Messagelen) {
+    private static int toLen(String Messagelen) {
         int len = Messagelen.length();
         int size;
         if (len % 8 == 0) {

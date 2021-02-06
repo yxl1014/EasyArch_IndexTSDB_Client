@@ -1,6 +1,6 @@
 package com.EasyArch.TSDB.Test;
 
-import com.EasyArch.TSDB.Server.Agreement_Head;
+import com.EasyArch.TSDB.Message.Agreement_Head;
 
 public class Test {
     private static int toLen(String Messagelen) {
@@ -16,7 +16,7 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        String fixed1 = "abcdefg";
+        /*String fixed1 = "abcdefg";
         byte[] fixed = fixed1.getBytes();
         String no = "1234567";
         byte[] nofixd = no.getBytes();
@@ -43,5 +43,11 @@ public class Test {
         byte[] bb = M.getBytes();
         System.out.println(new String(bb));
         System.out.println(Agreement_Head.DDL_CLEARCACHE);
+
+        byte[] result=new byte[3];
+        System.out.println(result[0]);*/
+        new TestClass(123);
+
+
     }
 }

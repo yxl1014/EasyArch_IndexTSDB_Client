@@ -1,4 +1,4 @@
-package com.EasyArch.TSDB.Server;
+package com.EasyArch.TSDB.Message;
 
 public class Crc16 {
 
