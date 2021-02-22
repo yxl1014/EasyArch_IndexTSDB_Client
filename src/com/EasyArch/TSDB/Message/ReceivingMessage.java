@@ -17,9 +17,9 @@ public class ReceivingMessage {
         byte[] bytes;//将长度转换为byte的暂存数组
 
         if (size > 4)//如果字节数大与4,则为long型
-            bytes =LongToBytes(nofixedsize);
+            bytes = longToBytes(nofixedsize);
         else//否则为int型
-            bytes = intToByteArray(nofixedsize);
+            bytes = intToBytes(nofixedsize);
 
         int message_num = outSize(nofixedsize, size);//需要几条1024字节的报文
 
@@ -80,9 +80,9 @@ public class ReceivingMessage {
         byte[] bytes;//将长度转换为byte的暂存数组
 
         if (size > 4)//如果字节数大与4,则为long型
-            bytes =LongToBytes(nofixedsize);
+            bytes = longToBytes(nofixedsize);
         else//否则为int型
-            bytes = intToByteArray(nofixedsize);
+            bytes = intToBytes(nofixedsize);
 
         int message_num = outSize(nofixedsize, size);//需要几条1024字节的报文
 
@@ -162,9 +162,9 @@ public class ReceivingMessage {
         byte[] bytes;//将长度转换为byte的暂存数组
 
         if (size > 4)//如果字节数大与4,则为long型
-            bytes =LongToBytes(nofixed.length);
+            bytes = longToBytes(nofixed.length);
         else//否则为int型
-            bytes = intToByteArray(nofixed.length);
+            bytes = intToBytes(nofixed.length);
 
         int message_num = outSize(nofixed.length, size);//需要几条1024字节的报文
 
@@ -232,7 +232,7 @@ public class ReceivingMessage {
         return message_num;
     }
 
-    public static byte[] intToByteArray(int i) {
+    public static byte[] intToBytes(int i) {
         byte[] result = new byte[4];
         result[0] = (byte) ((i >> 24) & 0xFF);
         result[1] = (byte) ((i >> 16) & 0xFF);
@@ -241,7 +241,7 @@ public class ReceivingMessage {
         return result;
     }
 
-    public static byte[] LongToBytes(long values) {
+    public static byte[] longToBytes(long values) {
         byte[] buffer = new byte[8];
         for (int i = 0; i < 8; i++) {
             int offset = 64 - (i + 1) * 8;
