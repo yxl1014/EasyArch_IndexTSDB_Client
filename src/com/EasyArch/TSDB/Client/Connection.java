@@ -48,7 +48,7 @@ public class Connection {
 
             byte[] result = SplitMessage.ServerMessage(buffer.toString().getBytes());//拆解初始化报文，并且获取返回值
 
-            if (result[0] == Agreement_Head.SERVER_REQUESTCONNECTION) {//判断报文是不是请求连接报文
+            if (result[0] == Agreement_Head.SERVER_REQUESTANSWER) {//判断报文是不是请求连接报文
                 this.protocolversion = result[1];//获取协议版本
                 this.code = result[2];//获取编码格式
                 this.timeout = result[3];//获取心跳间隔时间

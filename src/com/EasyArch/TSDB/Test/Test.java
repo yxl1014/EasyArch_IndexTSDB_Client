@@ -1,6 +1,7 @@
 package com.EasyArch.TSDB.Test;
 
 import com.EasyArch.TSDB.Message.Agreement_Head;
+import com.EasyArch.TSDB.Message.ReceivingMessage;
 
 public class Test {
     private static int toLen(String Messagelen) {
@@ -46,8 +47,39 @@ public class Test {
 
         byte[] result=new byte[3];
         System.out.println(result[0]);*/
-        new TestClass(123);
 
+        //DDLMessage(byte agreement, byte edition, byte[] name)
 
+        byte edition=0x01;
+
+        byte[] bytes= ReceivingMessage.DDLMessage(Agreement_Head.DDL_CREATETABLE,edition,"users".getBytes());
+        for (byte b:bytes){
+            System.out.print(b+" ");
+        }
+        System.out.println(Agreement_Head.DDL_CREATETABLE);
+        System.out.println(new String(bytes));
+
+       /* byte[] size=LongToBytes(10L);
+        for (byte b:size){
+            System.out.print(b);
+        }*/
+
+    }
+
+    public static byte[] intToByteArray(int i) {
+        byte[] result = new byte[4];
+        result[0] = (byte)((i >> 24) & 0xFF);
+        result[1] = (byte)((i >> 16) & 0xFF);
+        result[2] = (byte)((i >> 8) & 0xFF);
+        result[3] = (byte)(i & 0xFF);
+        return result;
+    }
+    public static byte[] LongToBytes(long values) {
+        byte[] buffer = new byte[8];
+        for (int i = 0; i < 8; i++) {
+            int offset = 64 - (i + 1) * 8;
+            buffer[i] = (byte) ((values >> offset) & 0xff);
+        }
+        return buffer;
     }
 }
