@@ -16,10 +16,15 @@ public class ReceivingMessage {
 
         byte[] bytes;//将长度转换为byte的暂存数组
 
-        if (size > 4)//如果字节数大与4,则为long型
+        int xxx;
+        if (size > 4) {//如果字节数大与4,则为long型
             bytes = longToBytes(nofixedsize);
-        else//否则为int型
+            xxx=8;
+        }
+        else {//否则为int型
             bytes = intToBytes(nofixedsize);
+            xxx=4;
+        }
 
         int message_num = outSize(nofixedsize, size);//需要几条1024字节的报文
 
@@ -34,7 +39,7 @@ public class ReceivingMessage {
 
         byte[] lens = new byte[size];//获取数据长度
 
-        System.arraycopy(bytes, 4 - size, lens, 0, size);//将暂存的长度存储到lens里
+        System.arraycopy(bytes, xxx - size, lens, 0, size);//将暂存的长度存储到lens里
 
         System.arraycopy(lens, 0, fixed, 1, size);//将数据长度赋值给定长部分
 
@@ -79,11 +84,15 @@ public class ReceivingMessage {
 
         byte[] bytes;//将长度转换为byte的暂存数组
 
-        if (size > 4)//如果字节数大与4,则为long型
+        int xxx;
+        if (size > 4) {//如果字节数大与4,则为long型
             bytes = longToBytes(nofixedsize);
-        else//否则为int型
+            xxx=8;
+        }
+        else {//否则为int型
             bytes = intToBytes(nofixedsize);
-
+            xxx=4;
+        }
         int message_num = outSize(nofixedsize, size);//需要几条1024字节的报文
 
         int messageSize = 1024 - 3 - size;//不定报文的操作长度
@@ -98,7 +107,7 @@ public class ReceivingMessage {
 
         byte[] lens = new byte[size];//获取数据长度
 
-        System.arraycopy(bytes, 4 - size, lens, 0, size);//将暂存的长度存储到lens里
+        System.arraycopy(bytes, xxx - size, lens, 0, size);//将暂存的长度存储到lens里
 
         System.arraycopy(lens, 0, fixed, 1, size);//将数据长度赋值给定长部分
 
@@ -161,10 +170,15 @@ public class ReceivingMessage {
 
         byte[] bytes;//将长度转换为byte的暂存数组
 
-        if (size > 4)//如果字节数大与4,则为long型
+        int xxx;
+        if (size > 4) {//如果字节数大与4,则为long型
             bytes = longToBytes(nofixed.length);
-        else//否则为int型
+            xxx=8;
+        }
+        else {//否则为int型
             bytes = intToBytes(nofixed.length);
+            xxx=4;
+        }
 
         int message_num = outSize(nofixed.length, size);//需要几条1024字节的报文
 
@@ -180,7 +194,7 @@ public class ReceivingMessage {
 
         byte[] lens = new byte[size];//获取数据长度
 
-        System.arraycopy(bytes, 4 - size, lens, 0, size);//将暂存的长度存储到lens里
+        System.arraycopy(bytes, xxx - size, lens, 0, size);//将暂存的长度存储到lens里
 
         System.arraycopy(lens, 0, fixed, 1, size);//将数据长度赋值给定长部分
 
