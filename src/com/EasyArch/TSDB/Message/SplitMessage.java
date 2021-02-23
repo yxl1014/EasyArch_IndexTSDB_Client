@@ -1,6 +1,8 @@
 package com.EasyArch.TSDB.Message;
 
 public class SplitMessage {
+
+
     public static byte[] resultMessage(byte[] message) {
 
         if (message == null) {//报文不为空

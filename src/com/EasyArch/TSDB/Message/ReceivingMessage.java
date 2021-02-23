@@ -286,7 +286,7 @@ public class ReceivingMessage {
         return b;
     }
 
-    private static int toLen(String Messagelen) {//传过来一个二进制值字符串
+    /*private static int toLen(String Messagelen) {//传过来一个二进制值字符串
         int len = Messagelen.length();//判断他的长度
         int size;//大小
         if (len % 8 == 0) {//如果能被8整除
@@ -296,7 +296,7 @@ public class ReceivingMessage {
         }
 
         return size;
-    }
+    }*/
 
     private static int outSize(int size, int lensize) {//数据长度   固定报文头数据大小长度
 
@@ -308,7 +308,7 @@ public class ReceivingMessage {
         return message_num;
     }
 
-    public static byte[] intToBytes(int i) {
+    private static byte[] intToBytes(int i) {
         byte[] result = new byte[4];
         result[0] = (byte) ((i >> 24) & 0xFF);
         result[1] = (byte) ((i >> 16) & 0xFF);
@@ -317,7 +317,7 @@ public class ReceivingMessage {
         return result;
     }
 
-    public static byte[] longToBytes(long values) {
+    private static byte[] longToBytes(long values) {
         byte[] buffer = new byte[8];
         for (int i = 0; i < 8; i++) {
             int offset = 64 - (i + 1) * 8;

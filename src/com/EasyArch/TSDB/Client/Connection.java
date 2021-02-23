@@ -54,7 +54,6 @@ public class Connection {
                 this.timeout = result[3];//获取心跳间隔时间
             }
 
-            in.close();//关闭io流
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,8 +84,6 @@ public class Connection {
             this.statement = new Statement(userid, protocolversion, code, timeout, socket);//新建操作类
 
 
-            in.close();
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
