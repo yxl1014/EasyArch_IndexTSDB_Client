@@ -2,6 +2,11 @@ package com.EasyArch.TSDB.Message;
 
 public class Agreement_Head {
 
+    //报文结束符
+    public static byte[] END="$EOF!".getBytes();
+    public static int END_SIZE= END.length;
+    public static byte MID='|';
+
     //报文类型
     public static byte TYPE_DDL = 0x00;//DDL
     public static byte TYPE_DML = 0x40;//DML

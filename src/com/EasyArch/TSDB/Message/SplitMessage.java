@@ -2,27 +2,25 @@ package com.EasyArch.TSDB.Message;
 
 public class SplitMessage {
     public static byte[] resultMessage(byte[] message) {
+
         if (message == null) {//报文不为空
             return null;
         }
 
-
         byte edition = message[0];//获取报文类型
 
-        int length = getSize(message);//计算报文长度
-        byte[] size = new byte[length];//新建报文长度
-        System.arraycopy(message, 1, size, 0, length);//赋值
+        byte size = message[1];//数据长度
 
         byte[] testcrc16 = Crc16.getCRC(message);//计算校验码
         byte[] crc16 = new byte[2];//新建校验码
-        System.arraycopy(message, 1 + length, crc16, 0, 2);//赋值
+        System.arraycopy(message, 2, crc16, 0, 2);//赋值
         if (!new String(testcrc16).equals(new String(crc16))) {//对比校验码
             return null;//如果不等返回null
         }
 
 
-        int fixedsize = length + 3;//计算定长数据长度
-        int nofixedsize = message.length - length;//计算不定长数据长度
+        int fixedsize = 4;//计算定长数据长度
+        int nofixedsize = message.length - 4;//计算不定长数据长度
 
         byte result = message[fixedsize];//获取执行结果
 
@@ -43,20 +41,17 @@ public class SplitMessage {
         }
         byte edition = message[0];//获取报文类型
 
-        int length = getSize(message);//计算报文长度
-        byte[] size = new byte[length];//新建报文长度
-        System.arraycopy(message, 1, size, 0, length);//赋值
+        byte size = message[1];//数据长度
 
         byte[] testcrc16 = Crc16.getCRC(message);//计算校验码
         byte[] crc16 = new byte[2];//新建校验码
-        System.arraycopy(message, 1 + length, crc16, 0, 2);//赋值
+        System.arraycopy(message, 2, crc16, 0, 2);//赋值
         if (!new String(testcrc16).equals(new String(crc16))) {//对比校验码
             return null;//如果不等返回null
         }
 
 
-        int fixedsize = length + 3;//计算定长数据长度
-        int nofixedsize = message.length - length;//计算不定长数据长度
+        int fixedsize = 4;//计算定长数据长度
 
         byte protocolversion = message[fixedsize];//获取协议版本
         byte code = message[fixedsize + 1];//获取编码格式
@@ -76,22 +71,20 @@ public class SplitMessage {
         if (message == null) {//报文不为空
             return null;
         }
-        byte edition = message[0];//获取报文类型
 
-        int length = getSize(message);//计算报文长度
-        byte[] size = new byte[length];//新建报文长度
-        System.arraycopy(message, 1, size, 0, length);//赋值
+        byte edition = message[0];//获取报文类型
+        byte size = message[1];//数据长度
 
         byte[] testcrc16 = Crc16.getCRC(message);//计算校验码
         byte[] crc16 = new byte[2];//新建校验码
-        System.arraycopy(message, 1 + length, crc16, 0, 2);//赋值
+        System.arraycopy(message, 2, crc16, 0, 2);//赋值
         if (!new String(testcrc16).equals(new String(crc16))) {//对比校验码
             return null;//如果不等返回null
         }
 
 
-        int fixedsize = length + 3;//计算定长数据长度
-        int nofixedsize = message.length - length;//计算不定长数据长度
+        int fixedsize = 4;//计算定长数据长度
+
 
         byte protocolversion = message[fixedsize];//获取协议版本
         byte response = message[fixedsize + 1];//获取响应结果
@@ -104,7 +97,7 @@ public class SplitMessage {
         return result1;
     }
 
-    private static int getSize(byte[] message) {
+/*    private static int getSize(byte[] message) {
         int size = 0;
         int length = message.length;
         for (int i = 1; i < length; i++) {
@@ -116,5 +109,5 @@ public class SplitMessage {
             }
         }
         return size;
-    }
+    }*/
 }

@@ -54,11 +54,15 @@ public class Test {
 
         byte[] bytes= ReceivingMessage.DDLMessage(Agreement_Head.DDL_CREATETABLE,edition,"users".getBytes());
         for (byte b:bytes){
-            System.out.print(b+" ");
+            System.out.print((int) b+" ");
         }
+        System.out.println();
+
         System.out.println(Agreement_Head.DDL_CREATETABLE);
         System.out.println(new String(bytes));
 
+        System.out.println(new String(Agreement_Head.END));
+        System.out.println(Agreement_Head.END.length);
        /* byte[] size=LongToBytes(10L);
         for (byte b:size){
             System.out.print(b);
