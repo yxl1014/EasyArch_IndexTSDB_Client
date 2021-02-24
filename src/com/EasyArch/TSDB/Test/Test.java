@@ -59,7 +59,7 @@ public class Test {
         System.out.println();
 
         System.out.println(Agreement_Head.DDL_CREATETABLE);
-        System.out.println(new String(bytes));
+        System.out.println(new String(bytes).length());
 
         System.out.println(new String(Agreement_Head.END));
         System.out.println(Agreement_Head.END.length);

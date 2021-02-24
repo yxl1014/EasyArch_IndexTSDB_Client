@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 public class Connection {
 
@@ -76,7 +75,7 @@ public class Connection {
             }
 
 
-            byte[] result = SplitMessage.resultMessage(buffer.toString().getBytes());//拆解初始化报文，并且获取返回值
+            byte[] result = SplitMessage.ServerMessage(buffer.toString().getBytes());//拆解初始化报文，并且获取返回值
             //TODO:这里需要拆取userid,需要讨论
             this.userid = String.valueOf(result[1]);
 

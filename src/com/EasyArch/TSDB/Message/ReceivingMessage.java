@@ -143,8 +143,13 @@ public class ReceivingMessage {
 
             System.arraycopy(lens, 0, fixed, 1, 1);//将数据长度赋值给定长部分
 
+            byte[] fixed1=new byte[4];
+            for(int p=0;p<4;p++){
+                fixed1[p]= (byte) (fixed[p]^Agreement_Head.KEY);
+            }
 
-            System.arraycopy(fixed, 0, b, j * 1024, fixed.length);//将定长头赋值给前半段  ||  将fixed数组从弟0为复制到b数组从j*1024开始复制fixed.length位
+
+            System.arraycopy(fixed1, 0, b, j * 1024, fixed.length);//将定长头赋值给前半段  ||  将fixed数组从弟0为复制到b数组从j*1024开始复制fixed.length位
 
             System.arraycopy(nofixed, i, b, fixed.length + i, Size);//将不定长头赋值给后半段
 
@@ -198,8 +203,12 @@ public class ReceivingMessage {
 
             System.arraycopy(lens, 0, fixed, 1, 1);//将数据长度赋值给定长部分
 
+            byte[] fixed1=new byte[4];
+            for(int p=0;p<4;p++){
+                fixed1[p]= (byte) (fixed[p]^Agreement_Head.KEY);
+            }
 
-            System.arraycopy(fixed, 0, b, j * 1024, fixed.length);//将定长头赋值给前半段  ||  将fixed数组从弟0为复制到b数组从j*1024开始复制fixed.length位
+            System.arraycopy(fixed1, 0, b, j * 1024, fixed.length);//将定长头赋值给前半段  ||  将fixed数组从弟0为复制到b数组从j*1024开始复制fixed.length位
 
             System.arraycopy(nofixed, i, b, fixed.length + i, Size);//将不定长头赋值给后半段
 
@@ -279,8 +288,13 @@ public class ReceivingMessage {
         byte lens = 0x01;//获取数据长度
         fixed[1] = lens;//将数据长度赋值给定长部分
 
+        byte[] fixed1=new byte[4];
+        for(int p=0;p<4;p++){
+            fixed1[p]= (byte) (fixed[p]^Agreement_Head.KEY);
+        }
+
         byte[] b = new byte[1024];//定义返回的报文byte数组
-        System.arraycopy(fixed, 0, b, 0, 4);//将定长头赋值给前半段
+        System.arraycopy(fixed1, 0, b, 0, 4);//将定长头赋值给前半段
         System.arraycopy(nofixed, 0, b, 4, 2);//将不定长头赋值给后半段
 
         return b;

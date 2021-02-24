@@ -3,9 +3,10 @@ package com.EasyArch.TSDB.Message;
 public class Agreement_Head {
 
     //报文结束符
-    public static byte[] END="$EOF!".getBytes();
-    public static int END_SIZE= END.length;
-    public static byte MID='|';
+    public static byte[] END = "$EOF!".getBytes();
+    public static int END_SIZE = END.length;
+    public static byte MID = '|';
+    public static byte KEY= (byte) 0X8F;
 
     //报文类型
     public static byte TYPE_DDL = 0x00;//DDL
