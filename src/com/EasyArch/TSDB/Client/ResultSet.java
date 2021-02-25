@@ -1,12 +1,14 @@
 package com.EasyArch.TSDB.Client;
 
+import com.EasyArch.TSDB.Result.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResultSet {
     private List<byte[]> results = new ArrayList<>();//报文的集合
 
-    private List<String> datas = new ArrayList<>();//处理完返回的数据的集合
+    //private List<String> datas = new ArrayList<>();//处理完返回的数据的集合
 
     /*
      * 1、error=1,空指针异常
@@ -29,6 +31,11 @@ public class ResultSet {
     private byte code;//编码格式
     private byte timeout;//心跳间隔时间
 
+    //result
+    private byte result;//执行结果
+    private final Data datas=new Data();//数据
+
+
     public boolean getResult(byte[] result) {//获取报文，拼报文
         if (result == null)//报文不为空
             return false;
@@ -38,44 +45,65 @@ public class ResultSet {
     }
 
     public void ResultToDataIsPang() {//将报文集合里的数据处理到数据集合里
-        int len = 0;
-        for (byte[] bytes : results) {
+        int len = 0;//获取总数据的长度
+        for (byte[] bytes : results) {//统计报文list里的所有报文的长度
             len += bytes.length;
         }
-        byte[] datas = new byte[len];
+        byte[] datas = new byte[len];//定义一个一整个数据的数组
         len = 0;
-        for (byte[] bytes : results) {
+        for (byte[] bytes : results) {//将报文list里的所有报文按顺序存入新的数组
             System.arraycopy(bytes, 0, datas, len, bytes.length);
             len += bytes.length;
         }
 
-        this.edition = datas[0];
-        this.pangResult = datas[1] == 1;
+        this.edition = datas[0];//获取版本号
+        this.pangResult = datas[1] == 1;//获取pang响应结果
 
     }
 
     public void ResultToDataIsServer() {
-        int len = 0;
-        for (byte[] bytes : results) {
+        int len = 0;//获取总数据的长度
+        for (byte[] bytes : results) {//统计报文list里的所有报文的长度
             len += bytes.length;
         }
-        byte[] datas = new byte[len];
+        byte[] datas = new byte[len];//定义一个一整个数据的数组
         len = 0;
-        for (byte[] bytes : results) {
+        for (byte[] bytes : results) {//将报文list里的所有报文按顺序存入新的数组
             System.arraycopy(bytes, 0, datas, len, bytes.length);
             len += bytes.length;
         }
 
-        this.protocolversion=datas[0];
-        this.code=datas[1];
-        this.timeout=datas[2];
+        this.protocolversion=datas[0];//获取协议版本号
+        this.code=datas[1];//获取编码格式
+        this.timeout=datas[2];//获取心跳时间
     }
 
     public void ResultToDataIsResult() {
+        int len = 0;//获取总数据的长度
+        for (byte[] bytes : results) {//统计报文list里的所有报文的长度
+            len += bytes.length;
+        }
+        byte[] datas = new byte[len];//定义一个一整个数据的数组
+        len = 0;
+        for (byte[] bytes : results) {//将报文list里的所有报文按顺序存入新的数组
+            System.arraycopy(bytes, 0, datas, len, bytes.length);
+            len += bytes.length;
+        }
 
+
+        this.edition=datas[0];//获取版本号
+        byte[] datass=new byte[len-1];//获取数据段
+
+        System.arraycopy(datas,1,datass,0,len-1);
+        String data=new String(datass);
+        this.datas.spliteData(data,this.agreement);
     }
 
-    public List<String> getDatas() {
+    public byte getResult() {
+        return result;
+    }
+
+    public Data getDatas() {
         return datas;
     }
 
