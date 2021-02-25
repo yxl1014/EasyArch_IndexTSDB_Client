@@ -19,6 +19,11 @@ public class Data {
                 data += "|";
             }
         }
+        //TODO 这里需要加上条件判断为什么语句的返回数据来获取具体数据
+        getDataBySelect(data);
+    }
+
+    private void getDataBySelect(String data){
 
     }
 }
